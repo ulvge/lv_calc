@@ -4,7 +4,7 @@
  * @author      正点原子团队(ALIENTEK)
  * @version     V1.0
  * @date        2022-01-11
- * @brief       LVGL 计算器 实验
+ * @brief       LVGL lv_switch(开关) 实验
  * @license     Copyright (c) 2020-2032, 广州市星翼电子科技有限公司
  ****************************************************************************************************
  * @attention
@@ -132,7 +132,7 @@ void led_task(void *pvParameters)
     while(1)
     {
         LED0_TOGGLE();
-        vTaskDelay(1000);
+        vTaskDelay(500);
     }
 }
 

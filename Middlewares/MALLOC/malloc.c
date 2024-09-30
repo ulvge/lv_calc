@@ -29,11 +29,14 @@
 
 /* 内存池(64字节对齐) */
 static __align(64) uint8_t mem1base[MEM1_MAX_SIZE];                                     /* 内部SRAM内存池 */
+#if SRAMBANK    == 2
 static __align(64) uint8_t mem2base[MEM2_MAX_SIZE] __attribute__((at(SRAM_BASE_ADDR))); /* 外扩SRAM内存池 */
-
+#endif
 /* 内存管理表 */
-static MT_TYPE mem1mapbase[MEM1_ALLOC_TABLE_SIZE];                                                      /* 内部SRAM内存池MAP */
+static MT_TYPE mem1mapbase[MEM1_ALLOC_TABLE_SIZE];         
+#if SRAMBANK    == 2                                             /* 内部SRAM内存池MAP */
 static MT_TYPE mem2mapbase[MEM2_ALLOC_TABLE_SIZE] __attribute__((at(SRAM_BASE_ADDR + MEM2_MAX_SIZE)));  /* 外扩SRAM内存池MAP */
+#endif
 
 #else   /* 是AC6编译器，使用AC6编译器时 */
 
@@ -60,6 +63,7 @@ static MT_TYPE mem2mapbase[MEM2_ALLOC_TABLE_SIZE] __attribute__((section(".bss.A
 
 #endif
 
+#if SRAMBANK    == 2
 /* 内存管理参数 */
 const uint32_t memtblsize[SRAMBANK] = {MEM1_ALLOC_TABLE_SIZE, MEM2_ALLOC_TABLE_SIZE,
                                        };       /* 内存表大小 */
@@ -80,6 +84,27 @@ struct _m_mallco_dev mallco_dev =
     0, 0,                           /* 内存管理未就绪 */
 };
 
+#else
+/* 内存管理参数 */
+const uint32_t memtblsize[SRAMBANK] = {MEM1_ALLOC_TABLE_SIZE,
+                                       };       /* 内存表大小 */
+
+const uint32_t memblksize[SRAMBANK] = {MEM1_BLOCK_SIZE,
+                                      };        /* 内存分块大小 */
+
+const uint32_t memsize[SRAMBANK] = {MEM1_MAX_SIZE,
+                                   };           /* 内存总大小 */
+
+/* 内存管理控制器 */
+struct _m_mallco_dev mallco_dev =
+{
+    my_mem_init,                    /* 内存初始化 */
+    my_mem_perused,                 /* 内存使用率 */
+    mem1base,             /* 内存池 */
+    mem1mapbase,       /* 内存管理状态表 */
+    0,                           /* 内存管理未就绪 */
+};
+#endif
 /**
  * @brief       复制内存
  * @param       *des : 目的地址

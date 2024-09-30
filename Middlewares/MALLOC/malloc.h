@@ -31,7 +31,7 @@
 #define SRAMIN      0       /* 内部SRAM, 共64KB */
 #define SRAMEX      1       /* SRAMEX内存池, 外扩SRAM, 共1024KB */
 
-#define SRAMBANK    2       /* 定义支持的SRAM块数. */
+#define SRAMBANK    1       /* 定义支持的SRAM块数. */
 
 
 /* 定义内存管理表类型,当外扩SDRAM的时候，必须使用uint32_t类型，否则可以定义成uint16_t，以节省内存占用 */
@@ -50,14 +50,15 @@
  
 /* mem1内存参数设定.mem1是F103内部的SRAM. */
 #define MEM1_BLOCK_SIZE         32                              /* 内存块大小为32字节 */
-#define MEM1_MAX_SIZE           10 * 1024                       /* 最大管理内存 40K, F103内部SRAM总共512KB */
+#define MEM1_MAX_SIZE           32	//10 * 1024                       /* 最大管理内存 40K, F103内部SRAM总共512KB */
 #define MEM1_ALLOC_TABLE_SIZE   MEM1_MAX_SIZE/MEM1_BLOCK_SIZE   /* 内存表大小 */
 
+#if SRAMBANK    == 2
 /* mem2内存参数设定.mem3是F103外扩SRAM */
 #define MEM2_BLOCK_SIZE         32                              /* 内存块大小为32字节 */
 #define MEM2_MAX_SIZE           100 *1024                       /* 最大管理内存963K, F103外扩SRAM大小1024KB */
 #define MEM2_ALLOC_TABLE_SIZE   MEM2_MAX_SIZE/MEM2_BLOCK_SIZE   /* 内存表大小 */
-
+#endif
 
 /* 如果没有定义NULL, 定义NULL */
 #ifndef NULL
