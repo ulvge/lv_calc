@@ -489,8 +489,8 @@ void lv_mainstart(void)
 {
     lv_obj_t *label_title = lv_label_create(lv_scr_act());
     lv_label_set_text(label_title,"scientific calculator");
-    lv_obj_set_style_text_font(label_title,&lv_font_montserrat_24,LV_PART_MAIN);
-    lv_obj_align(label_title,LV_ALIGN_TOP_MID,0,10);
+    lv_obj_set_style_text_font(label_title,&lv_font_montserrat_18,LV_PART_MAIN);
+    lv_obj_align(label_title,LV_ALIGN_TOP_MID,0,1);
   
     lv_obj_t * btnm1 = lv_btnmatrix_create(lv_scr_act());
     lv_btnmatrix_set_map(btnm1, kb_map_num);
@@ -506,12 +506,12 @@ void lv_mainstart(void)
     lv_textarea_set_one_line(phone_ta, true);          /* 将文本区域配置为一行或恢复正常 */
     lv_textarea_set_cursor_click_pos(phone_ta,false);  /* 隐藏光标 */
     lv_obj_set_size(phone_ta,lcddev.width - 20,lv_font_montserrat_46.line_height);
-    lv_obj_align_to(phone_ta, btnm1, LV_ALIGN_OUT_TOP_MID, 0, -50);
-    lv_obj_set_style_text_font(phone_ta,&lv_font_montserrat_36,0);
+    lv_obj_align_to(phone_ta, btnm1, LV_ALIGN_OUT_TOP_MID, 0, -30); //让框框下来一点
+    lv_obj_set_style_text_font(phone_ta,&lv_font_montserrat_24,0);
 
 
     label_dec = lv_label_create(lv_scr_act());
     lv_label_set_text(label_dec,"DEG");
     lv_obj_set_style_text_font(label_dec,&lv_font_montserrat_18,0);
-    lv_obj_align_to(label_dec,phone_ta,LV_ALIGN_BOTTOM_RIGHT,-50,-10);
+    lv_obj_align_to(label_dec,phone_ta,LV_ALIGN_BOTTOM_RIGHT,-50,-5); // 让文字下来一点
 }
